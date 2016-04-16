@@ -1,0 +1,42 @@
+[
+    {
+        "model": "webapp.organ",
+        "pk": 1,
+        "fields": {
+            "name": "Kidney",
+            "description": "kidney_desc"
+        }
+    },
+    {
+        "model": "webapp.organ",
+        "pk": 2,
+        "fields": {
+            "name": "liver",
+            "description": "liver_desc"
+        }
+    },
+    {
+        "model": "webapp.persontype",
+        "pk": 1,
+        "fields": {
+            "name": "donor",
+            "description": "donor_desc"
+        }
+    },
+    {
+        "model": "webapp.persontype",
+        "pk": 2,
+        "fields": {
+            "name": "patient",
+            "description": "patient_desc"
+        }
+    },
+    {
+        "model": "webapp.user",
+        "pk": 1,
+        "fields": {
+            "username": "root",
+            "password": "root"
+        }
+    }
+]
