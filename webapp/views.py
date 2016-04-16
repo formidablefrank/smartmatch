@@ -1,6 +1,10 @@
 from django.shortcuts import render
 
 # Create your views here.
-def index(request):
+def home(request):
     context = {'pagename': 'Welcome'}
-    return render(request, 'index.html', context)
+    return render(request, 'home.html', context)
+
+def dashboard(request):
+    context = {'pagename': 'Dashboard'}
+    return render(request, 'dashboard.html', context)
