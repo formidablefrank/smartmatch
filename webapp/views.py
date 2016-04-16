@@ -64,8 +64,14 @@ def matches(request):
     context = {'pagename': 'Matches', 'list': matches}
     return render(request, 'matches.html', context)
 
-def notify(request, id):
+def notify(request, pid):
+    recipient = Person.objects.get(id = pid)
+    sent = ''
     #post to chikka API
+    post_data = [('message_type', 'send'), ('mobile_number', recipient.contact), ('shortcode', '29290469148'), ('message_id', pid), ('message', 'Hello! You already have a donor.'), ('client_id', 'f3be0f5b7d2abc0ce6fc0dccf7ecc049272af5679fbf5a547429cbaddb0391ff'), ('secret_key', '757f94e11c41b07a8eb846c20ad1db7fcb98b07a57b85ebe7092c3e4c457f87b')]
+    result = urllib2.urlopen('https://post.chikka.com/smsapi/request', urllib.urlencode(post_data))
+    content = result.read()
+    print(content)
     matches = Matcher.getMatches()
     context = {'pagename': 'Matches', 'list': matches, 'sent': sent}
     return render(request, 'matches.html', context)
