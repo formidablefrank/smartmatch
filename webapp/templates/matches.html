@@ -17,8 +17,44 @@
             <button class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove"><i class="fa fa-times"></i></button>
           </div>
         </div>
-        <div class="box-body">
-          Hello
+        <div class="box-body table-responsive">
+            {% if sent is True %}
+            <div class="alert alert-success alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <h4>	<i class="icon fa fa-check"></i> Alert!</h4>
+                SMS notification sent! Thank you for saving a life!
+            </div>
+            {% endif %}
+            {% if sent is False %}
+            <div class="alert alert-danger alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <h4><i class="icon fa fa-ban"></i> Alert!</h4>
+                SMS notification service failed. Pleaase try again later.
+            </div>
+            {% endif %}
+          <table class="table table-bordered table-hover">
+              <tr>
+                  <th>Donor Name</th>
+                  <th>Organ</th>
+                  <th>Recipient Name</th>
+                  <th>Score</th>
+                  <th>Actions</th>
+              </tr>
+              {% for match in list %}
+              <tr>
+                  <td>{{match.donor.name}}</td>
+                  <td>{{match.organ.name}}</td>
+                  <td>{{match.recipient.name}}</td>
+                  <td>{{match.score}}</td>
+                  <td>
+                    <div class="btn-group">
+                        <a class="btn btn-default btn-sm" href="{% url 'notify' match.recipient.id %}"><span class="glyphicon glyphicon-pencil"></span></a>
+                        <a class="btn btn-default btn-sm"><span class="glyphicon glyphicon-trash"></span></a>
+                    </div>
+                  </td>
+              </tr>
+              {% endfor %}
+          </table>
         </div><!-- /.box-body -->
         <div class="box-footer">
 

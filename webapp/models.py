@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 class Organ(models.Model):
-    name = models.CharField(max_length = 10)
+    name = models.CharField(unique = True, max_length = 10)
     description = models.CharField(max_length = 50, default = 'desc')
     #organ attributes here
 
@@ -54,7 +54,7 @@ class Person(models.Model):
     weight = models.DecimalField(decimal_places = 2, max_digits = 5)
     blood = models.CharField(max_length = 5)
     contact = models.IntegerField()
-    date = models.DateTimeField(auto_now_add = True, blank = True)
+    date = models.DateTimeField(auto_now_add = True)
     organ = models.ForeignKey(Organ)
     person_type = models.ForeignKey(PersonType)
 

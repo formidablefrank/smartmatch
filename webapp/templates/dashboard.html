@@ -99,11 +99,15 @@
         </div>
         <!-- Sidebar Menu -->
         <ul class="sidebar-menu">
-            <li class="header admintab">ADMIN TASKS</li>
+            <li class="header admintab">VIEW TASKS</li>
             <!-- Optionally, you can add icons to the links -->
             <li class="{% if 'matches' in request.path %} active {% endif %}"><a href="{% url 'matches' %}"><i class="fa fa-group"></i> <span>View Matches</span></a></li>
-            <li class="{% if 'recipients' in request.path %} active {% endif %}"><a href="{% url 'rec' %}"><i class="fa fa-user"></i> <span>View Potential Recipients</span></a></li>
-            <li class="{% if 'organs' in request.path %} active {% endif %}"><a href="{% url 'org' %}"><i class="fa fa-heart"></i> <span>View Organs</span></a></li>
+            <li class="{% if 'recipients' in request.path and 'recipients/add' not in request.path %} active {% endif %}"><a href="{% url 'rec' %}"><i class="fa fa-user"></i> <span>View Recipients</span></a></li>
+            <li class="{% if 'organs' in request.path and 'organs/add' not in request.path %} active {% endif %}"><a href="{% url 'org' %}"><i class="fa fa-heart"></i> <span>View Donors</span></a></li>
+            <li class="header admintab">CREATE TASKS</li>
+            <!-- Optionally, you can add icons to the links -->
+            <li class="{% if 'recipients/add' in request.path %} active {% endif %}"><a href="{% url 'addrec' %}"><i class="fa fa-user"></i> <span>Add Recipient</span></a></li>
+            <li class="{% if 'organs/add' in request.path %} active {% endif %}"><a href="{% url 'addorg' %}"><i class="fa fa-group"></i> <span>Add Donor</span></a></li>
         </ul><!-- /.sidebar-menu -->
     </section>
     <!-- /.sidebar -->

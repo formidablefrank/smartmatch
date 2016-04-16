@@ -17,8 +17,35 @@
             <button class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove"><i class="fa fa-times"></i></button>
           </div>
         </div>
-        <div class="box-body">
-          Hello
+        <div class="box-body table-responsive">
+          <table class="table table-bordered table-hover">
+              <tr>
+                  <th>Name</th>
+                  <th>HLA</th>
+                  <th>Age</th>
+                  <th>Weight</th>
+                  <th>Blood type</th>
+                  <th>Date enlisted</th>
+                  <th>Organ needed</th>
+              </tr>
+              {% for rec in rec_list %}
+              <tr>
+                  <td>{{ rec.name }}</td>
+                  <td>{{ rec.hla }}</td>
+                  <td>{{ rec.age }}</td>
+                  <td>{{ rec.weight }}</td>
+                  <td>{{ rec.blood }}</td>
+                  <td>{{ rec.date }}</td>
+                  <td>{{ rec.organ.name }}</td>
+                  <td>
+                      <div class="btn-group">
+                        <a class="btn btn-default btn-sm" href="{% url 'person' rec.id %}"><span class="glyphicon glyphicon-pencil"></span></a>
+                        <a class="btn btn-default btn-sm"><span class="glyphicon glyphicon-trash"></span></a>
+                    </div>
+                  </td>
+              </tr>
+              {% endfor %}
+          </table>
         </div><!-- /.box-body -->
         <div class="box-footer">
 

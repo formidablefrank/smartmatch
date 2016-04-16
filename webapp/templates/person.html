@@ -1,0 +1,86 @@
+{% extends 'dashboard.html' %}
+
+{% block dashcontent %}
+<div class="content-wrapper">
+    <section class="content-header">
+        <h1>
+            Admin Dashboard
+        </h1>
+    </section>
+    <div class="row">
+        <div class="col-xs-12 col-md-6">
+            <section class="content">
+              <!-- Default box -->
+              <div class="box">
+                <div class="box-header with-border">
+                  <h3 class="box-title">View {{item.person_type.name}} details</h3>
+                  <div class="box-tools pull-right">
+                    <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
+                    <button class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove"><i class="fa fa-times"></i></button>
+                  </div>
+                </div>
+                <div class="box-body">
+                  <form class="" action="{% url 'person' item.id %}" method="post">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="name" value="{{ item.name }}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="hla">HLA</label>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="hla" value="{{ item.hla }}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="age">Age</label>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="age" value="{{ item.age }}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="weight">Weight (lbs)</label>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="weight" value="{{ item.weight }}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="blood">Blood type</label>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="blood" value="{{ item.blood }}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="contact">Contact number</label>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="contact" value="{{ item.contact }}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="date">Enlistment date</label>
+                        <div class="form-group">
+                            <input type="date" class="form-control" name="date" value="{{ item.date }}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="organ">Organ {% if item.person_type.name == 'donor' %}donated{% elif item.person_type.name == 'recipient' %}needed{% endif %} </label>
+                        <select class="form-control" name="organ">
+                            {% for organ in organs%}
+                            <option value="organ.id">{{ organ.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <button type="button" name="" class="btn btn-success" id="btnSave">Save</button>
+                  </form>
+                </div><!-- /.box-body -->
+                <div class="box-footer">
+
+                </div><!-- /.box-footer-->
+              </div><!-- /.box -->
+            </section>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

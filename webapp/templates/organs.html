@@ -11,14 +11,41 @@
       <!-- Default box -->
       <div class="box">
         <div class="box-header with-border">
-          <h3 class="box-title">View Available Organs</h3>
+          <h3 class="box-title">View Available Donors</h3>
           <div class="box-tools pull-right">
             <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
             <button class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove"><i class="fa fa-times"></i></button>
           </div>
         </div>
-        <div class="box-body">
-          Hello
+        <div class="box-body table-responsive">
+            <table class="table table-bordered table-hover">
+                <tr>
+                    <th>Name</th>
+                    <th>HLA</th>
+                    <th>Age</th>
+                    <th>Weight</th>
+                    <th>Blood type</th>
+                    <th>Date enlisted</th>
+                    <th>Organ donated</th>
+                </tr>
+                {% for org in org_list %}
+                <tr>
+                    <td>{{ org.name }}</td>
+                    <td>{{ org.hla }}</td>
+                    <td>{{ org.age }}</td>
+                    <td>{{ org.weight }}</td>
+                    <td>{{ org.blood }}</td>
+                    <td>{{ org.date }}</td>
+                    <td>{{ org.organ.name }}</td>
+                    <td>
+                        <div class="btn-group">
+                          <a class="btn btn-default btn-sm" href="{% url 'person' org.id %}"><span class="glyphicon glyphicon-pencil"></span></a>
+                          <a class="btn btn-default btn-sm"><span class="glyphicon glyphicon-trash"></span></a>
+                      </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
         </div><!-- /.box-body -->
         <div class="box-footer">
 
