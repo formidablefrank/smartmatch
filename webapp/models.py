@@ -41,8 +41,9 @@ class Matcher(models.Model):
       else:
         point = point
 
-      if patient.prevKidneyDonor == True:
+      if patient.prevKidneyDonor:
           point = point + 15
+          print '15? spoint ' + str(point)
 
       print 'point ' + str(point)
 

@@ -28,7 +28,13 @@ def addrec(request):
         organ = Organ.objects.get(id = request.POST['organ'])
         person_type = PersonType.objects.get(name='recipient')
         antibody = request.POST['anti']
-        prev = request.POST['prev']
+        print "ANTI " + request.POST['anti']
+        print "PREV " + str(request.POST['prev'])
+        if request.POST['prev'] == '1':
+            print "TRUE" 
+            prev = True
+        else:
+            prev = False
         Person.objects.create(name = name, hla = hla, age = age, weight = weight, blood = blood, contact = contact, organ = organ, person_type = person_type, reactiveAntibodies = antibody, prevKidneyDonor = prev)
         return redirect('rec')
     context = {'pagename': 'Recipients', 'organs': Organ.objects.all()}
