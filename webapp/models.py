@@ -6,58 +6,101 @@ class Organ(models.Model):
     description = models.CharField(max_length = 50, default = 'desc')
     #organ attributes here
 
+    def __unicode__(self):
+        return self.name
+
 class PersonType(models.Model):
     name = models.CharField(max_length = 10)
     description = models.CharField(max_length = 50)
 
+    def __unicode__(self):
+        return self.name
+
 class Matcher(models.Model):
-    def isHlaOk(patient, donor):
-        return patient.hla - donor.hla
+    def pointSystem(self,patient):
+      point = 0
 
-    def isAgeOk(patient, donor):
-        return patient.age - donor.age
+      if patient.reactiveAntibodies >= 50:
+        point = point + 4
+      elif patient.reactiveAntibodies < 50:
+        point = point + 2
 
-    def isWeightOk(patient, donor):
-        return patient.weight - donor.weight
+      if patient.enrollmentDate > 3:
+        point = point + 4
+      elif  patient.enrollmentDate > 2 and patient.enrollmentDate <= 3:
+        point = point + 3
+      elif  patient.enrollmentDate > 1 and patient.enrollmentDate <= 2:
+        point = point + 2
+      elif patient.enrollmentDate <= 1:
+        point = point + 1
 
-    def isBloodOk(patient, donor):
-        return patient.blood == donor.blood
+      if patient.age < 18:
+        point = point + 2
+      elif patient.age >= 19 and patient.age <= 65:
+        point = point + 1
+      else:
+        point = point
 
-    def isOrganOk(patient, donor):
-        return patient.organ.name == donor.organ.name
+      if patient.prevKidneyDonor == True:
+          point = point + 15
 
-    def match(patient, donor):
-        #more error, less priority
-        if isBloodOk and isOrganOk:
-            #return
-            return isHlaOk + isAgeOk + isWeightOk
+      print 'point ' + str(point)
+
+      return point
+
+    def isCompatible(self, patient, donor):
+        if patient.hla == donor.hla and patient.blood == donor.blood:
+          print "Hello"
+          pt = self.pointSystem(patient)
+          print 'pt ' + str(pt)
+          return pt
         else:
-            return -1
+          return -1
 
-    def getMatches():
-        match_list = []
-        for recipient in Person.objects.filter(person_type__name='recipient'):
-            for donor in Person.objects.filter(person_type__name='donor'):
-                okay = self.match(recipient, donor)
-                if okay:
-                    row = {'recipient': recipient, 'donor': donor, 'error': okay}
+    def getMatches(self):
+        data = []
+        sumthing = Person.objects.filter(person_type__name='donor')
+        print len(sumthing)
+        for donor in sumthing:
+            # donor = {'donor': donor}
+            donorxrecip = []
+            match_list = []
+            donordict = {'Donor':donor.name}
+            for recipient in Person.objects.filter(person_type__name='recipient'):
+                okay = self.isCompatible(recipient, donor)
+                print 'okay ' + str(okay)
+                if okay > 0:
+                    #if okay compute for points
+                    row = {'recipient': recipient.name, 'score': okay, 'contact_cell': recipient.contact}
                     match_list.append(row)
+                    match_list = sorted(match_list, key=lambda key: key['score'], reverse=True)
                 else:
                     print('not okay')
-        return match_list
-
+            donorxrecip.append(donordict)
+            donorxrecip.append(match_list)
+            data.append(donorxrecip)
+        return data #data[Donor X Recipient][Donor / Recipient] [Recipients]
 
 class Person(models.Model):
-    name = models.CharField(max_length = 50)
-    hla = models.CharField(max_length = 20)
+    name = models.CharField(max_length = 50, default = '')
+    hla = models.CharField(max_length = 20, default = '')
     age = models.IntegerField(default = 0)
-    weight = models.DecimalField(decimal_places = 2, max_digits = 5)
-    blood = models.CharField(max_length = 5)
-    contact = models.IntegerField()
+    weight = models.DecimalField(decimal_places = 2, max_digits = 5, default = 0)
+    blood = models.CharField(max_length = 5, default = '')
+    contact = models.IntegerField(default = 0)
     date = models.DateTimeField(auto_now_add = True)
+    enrollmentDate = models.IntegerField(default = 0)
     organ = models.ForeignKey(Organ)
     person_type = models.ForeignKey(PersonType)
+    reactiveAntibodies = models.DecimalField(decimal_places = 2, max_digits = 5,default = 0)
+    prevKidneyDonor = models.BooleanField(default = False)
+
+    def __unicode__(self):
+        return unicode(self.person_type)
 
 class User(models.Model):
     username = models.CharField(max_length = 20)
     password = models.CharField(max_length = 100)
+
+    def __unicode__(self):
+        return unicode(self.username)
