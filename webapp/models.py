@@ -65,13 +65,13 @@ class Matcher(models.Model):
             # donor = {'donor': donor}
             donorxrecip = []
             match_list = []
-            donordict = {'Donor':donor.name}
+            donordict = {'donor' : donor.name, 'organ' : donor.organ.name }
             for recipient in Person.objects.filter(person_type__name='recipient'):
                 okay = self.isCompatible(recipient, donor)
                 print 'okay ' + str(okay)
                 if okay > 0:
                     #if okay compute for points
-                    row = {'recipient': recipient.name, 'score': okay, 'contact_cell': recipient.contact}
+                    row = {'recipient': recipient.name, 'id': recipient.id, 'score': okay, 'contact_cell': recipient.contact}
                     match_list.append(row)
                     match_list = sorted(match_list, key=lambda key: key['score'], reverse=True)
                 else:

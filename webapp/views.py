@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from webapp.models import *
+import urllib2, urllib
 
 # Create your views here.
 def home(request):
@@ -26,7 +27,9 @@ def addrec(request):
         contact = request.POST['contact']
         organ = Organ.objects.get(id = request.POST['organ'])
         person_type = PersonType.objects.get(name='recipient')
-        Person.objects.create(name = name, hla = hla, age = age, weight = weight, blood = blood, contact = contact, organ = organ, person_type = person_type)
+        antibody = request.POST['anti']
+        prev = request.POST['prev']
+        Person.objects.create(name = name, hla = hla, age = age, weight = weight, blood = blood, contact = contact, organ = organ, person_type = person_type, reactiveAntibodies = antibody, prevKidneyDonor = prev)
         return redirect('rec')
     context = {'pagename': 'Recipients', 'organs': Organ.objects.all()}
     return render(request, 'newrecipient.html', context)
@@ -60,18 +63,24 @@ def organ(request):
     return render(request, 'recipients.html', context)
 
 def matches(request):
-    matches = Matcher.getMatches()
+    matcher = Matcher()
+    matches = matcher.getMatches()
     context = {'pagename': 'Matches', 'list': matches}
     return render(request, 'matches.html', context)
 
-def notify(request, pid):
-    recipient = Person.objects.get(id = pid)
-    sent = ''
+def notify(request, person_id):
+    recipient = Person.objects.get(id = person_id)
+    sent = False
     #post to chikka API
-    post_data = [('message_type', 'send'), ('mobile_number', recipient.contact), ('shortcode', '29290469148'), ('message_id', pid), ('message', 'Hello! You already have a donor.'), ('client_id', 'f3be0f5b7d2abc0ce6fc0dccf7ecc049272af5679fbf5a547429cbaddb0391ff'), ('secret_key', '757f94e11c41b07a8eb846c20ad1db7fcb98b07a57b85ebe7092c3e4c457f87b')]
-    result = urllib2.urlopen('https://post.chikka.com/smsapi/request', urllib.urlencode(post_data))
-    content = result.read()
-    print(content)
-    matches = Matcher.getMatches()
+    post_data = [('message_type', 'send'), ('mobile_number', recipient.contact), ('shortcode', '29290469148'), ('message_id', person_id), ('message', 'Hello! You already have a donor.'), ('client_id', 'f3be0f5b7d2abc0ce6fc0dccf7ecc049272af5679fbf5a547429cbaddb0391ff'), ('secret_key', '757f94e11c41b07a8eb846c20ad1db7fcb98b07a57b85ebe7092c3e4c457f87b')]
+    try:
+        result = urllib2.urlopen('https://post.chikka.com/smsapi/request', urllib.urlencode(post_data))
+        result.read()
+        sent = True
+    except urllib2.HTTPError as e:
+        print e
+        sent = False
+    matcher = Matcher()
+    matches = matcher.getMatches()
     context = {'pagename': 'Matches', 'list': matches, 'sent': sent}
     return render(request, 'matches.html', context)
