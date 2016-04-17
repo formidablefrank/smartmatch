@@ -3,8 +3,7 @@ from . import views
 from django.views.generic import TemplateView
 
 urlpatterns = [
-    # url(r'^$', views.home, name='home'),
-   	url(r'^/?$', TemplateView.as_view(template_name='home.html'), name='home'),
+   	url(r'^$', TemplateView.as_view(template_name='home.html'), name='home'),
    	url(r'^search/$', TemplateView.as_view(template_name='search.html'), name='search'),
     url(r'^register/$', TemplateView.as_view(template_name='register.html'), name='register'),
     url(r'^dashboard/$', views.dashboard, name='dashboard'),

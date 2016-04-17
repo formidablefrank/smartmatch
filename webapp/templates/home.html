@@ -28,7 +28,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand page-scroll" href="#page-top">SmartMatch</a>
+                <a class="navbar-brand page-scroll" href="#page-top" id="title"><strong>e</strong>BAHAGI</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -39,9 +39,6 @@
                     </li>
                     <li>
                         <a class="page-scroll" href="#services">Services</a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="#contact">Contact</a>
                     </li>
                 </ul>
             </div>
@@ -54,15 +51,37 @@
         <div class="layer">    
             <div class="header-content">
                 <div class="header-content-inner">
-                    <h1>SmartMatch</h1>
+                    <h1 id="title"><strong>e</strong>BAHAGI</h1>
                     <hr>
-                    <p>Faster Way to Match and Connect Available Organs to Recipients </p>
-                    
+                    <h3>Faster Way to Match and Connect Available Organs to Recipients</h3>
+                    <br>
                     <a href="#about" class="btn btn-primary btn-xl page-scroll">Find Out More</a>
                 </div>
             </div>
         </div>
     </header>
+
+    <aside class="bg-dark">
+        <div class="container text-center">
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-4">
+                    <div class="call-to-action">
+                        <h2>100,215</h2>
+                        <h4>Waiting list organ candidates</h4>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="call-to-action">
+                        <h2>12,000</h2>
+                        <h4>Filipinos develop kidney failure every year</h4>
+                    </div>
+                </div>
+                <div class="col-md-2"></div>
+
+            </div>
+        </div>
+    </aside>
 
     <section class="bg-primary" id="about">
         <div class="container">
@@ -70,9 +89,9 @@
                 <div class="col-lg-8 col-lg-offset-2 text-center">
                     <h2 class="section-heading">Less time spent, more lives saved</h2>
                     <hr class="light">
-                    <p class="text-faded">A System that automates matching of a donated organ to possible recipients and notification of recipients through SMS</p>
+                    <p class="text-faded">A system that automates matching of a donated organ to potential recipients and notification through SMS</p>
                     
-                    <a href="#" class="btn btn-default btn-xl">Get Started!</a>
+                    <a href="{% url 'dashboard' %}" class="btn btn-default btn-xl">Get Started!</a>
                 </div>
             </div>
         </div>
@@ -93,7 +112,7 @@
                     <div class="service-box">
                         <i class="fa fa-4x fa-list wow bounceIn text-primary"></i>
                         <h3>Add Patients</h3>
-                        <p class="text-muted">Qualified organ recipients can be added to the national list of recipients.</p>
+                        <p class="text-muted">Qualified organ recipients are added to the national list of recipients.</p>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 text-center">
@@ -107,15 +126,26 @@
                     <div class="service-box">
                         <i class="fa fa-4x fa-exchange wow bounceIn text-primary" data-wow-delay=".2s"></i>
                         <h3>Organ Matching</h3>
-                        <p class="text-muted">We match compatible recipients to available organs through medical and geographical criteria.</p>
+                        <p class="text-muted">Automatically match compatible recipients to available organs with extensive criteria.</p>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 text-center">
                     <div class="service-box">
                         <i class="fa fa-4x fa-envelope wow bounceIn text-primary" data-wow-delay=".3s"></i>
                         <h3>Instant Notification</h3>
-                        <p class="text-muted">Recipients, are immediately notified through SMS</p>
+                        <p class="text-muted">Recipients are immediately notified through SMS</p>
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-primary">
+        <div class="container">
+            <div class="row">
+                <div class="ccol-xs-12 text-center">
+                    <p class="">eBahagi by <em>SCL_Peeps</em></p>
+                    <p>#ThinkOpenHealth2016 Hackathon</p>
                 </div>
             </div>
         </div>
